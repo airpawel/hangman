@@ -1,4 +1,7 @@
 /**
+ * Created by Kwolson on 3/27/2017.
+ */
+/**
  * Created by Kwolson on 3/13/2017.
  */
 
@@ -46,34 +49,38 @@ letters[34] = "Ź";
 
 var tries = 1;
 
-// for(var i=0; i<password.length; i++) {
-//     if(password.charAt(i) == " ") hiddenpass = hiddenpass + " ";
-//     else hiddenpass = hiddenpass + "-";
-// }
-
-function firstShow(par) {
-    // console.log(typeof(par));
-    password = par;
-    hiddenpass=""
-    console.log(password)
-    console.log(hiddenpass)
-    for(var i=0; i<password.length; i++) {
-        if(password.charAt(i) == " ") hiddenpass = hiddenpass + " ";
-        else hiddenpass = hiddenpass + "-";
-    }
-    document.getElementById("gameboard").innerHTML = hiddenpass.toUpperCase();
+for(var i=0; i<password.length; i++) {
+    if(password.charAt(i) == " ") hiddenpass = hiddenpass + " ";
+    else hiddenpass = hiddenpass + "-";
 }
 
+function drawPassword() {
+    $.ajax({
+        type: "POST",
+        url: "drawpassword.php",
+        dataType: 'json',
+        data: { },
+        success: function (result) {
+            console.log(result['info']);
+            console.log(result);
+        },
+        complete: function () {
+
+        },
+        error: function () {
+            console.log("Cos poszlo nie tak :(");
+        }
+    });
+}
 
 function showPassword() {
     document.getElementById("gameboard").innerHTML = hiddenpass.toUpperCase();
 }
 
-
 function start() {
     var alphabet_content = "";
     for(var i=0; i<35; i++) {
-        var element = "lett" + i;
+        var element = "lettt" + i;
         alphabet_content = alphabet_content + '<div class="letter" onclick="letterExists('+ i +')" id="'+ element +'">'+ letters[i] +'</div>';
         if ( (i+1)%7 == 0 ) alphabet_content = alphabet_content + '<div style="clear: both;"></div>';
     }
@@ -117,5 +124,7 @@ function letterExists(num) {
 document.addEventListener("DOMContentLoaded", function () {
     tries = 1;
     start();
-    // showPassword();
+    showPassword();
+    drawPassword();
 });
+

@@ -7,9 +7,11 @@
     <meta name="description" content="Try not to hang the man while guessing" />
     <meta name="keywords" content="hang,hangman,wisielec,simple game" />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
     <link type="text/css" href="style.css" rel="stylesheet" />
-    <script type="text/javascript" src="hangman.js"></script>
+    <script type="text/javascript" src="hangme.js"></script>
 </head>
 <body>
     <div id="container">
@@ -24,5 +26,8 @@
         </div>
         <div style="clear: both;"></div>
     </div>
+    <script type="text/javascript">
+
+    </script>
 </body>
 </html>
