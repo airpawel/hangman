@@ -1,0 +1,82 @@
+body {
+    background-color: #000000;
+    color: lightgray;
+    font-size: 24px;
+    font-family: 'Inconsolata', monospace;
+    font-weight: 700;
+}
+
+#container {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#gameboard {
+    width: 900px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    font-size: 44px;
+}
+
+#gallows {
+    float: left;
+    min-height: 280px;
+    width: 450px;
+    /*background-image: url("img/s0.jpg");*/
+}
+
+#alphabet {
+    float: left;
+    min-height: 240px;
+    width: 410px;
+    padding: 20px;
+}
+
+.letter {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    padding: 5px;
+    text-align: center;
+    border: 2px solid #cccccc;
+    border-radius: 5px;
+}
+
+.letter:hover {
+    cursor: pointer;
+    background-color: #444444;
+    color: white;
+    border: 2px solid white;
+}
+
+.exists {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    padding: 5px;
+    text-align: center;
+    border: 2px solid #cccccc;
+    border-radius: 5px;
+    background-color: green;
+}
+
+.notexists {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    padding: 5px;
+    text-align: center;
+    border: 2px solid #cccccc;
+    border-radius: 5px;
+    background-color: red;
+}
+
+/*#frombase {*/
+    /*color: white;*/
+/*}*/
+
