@@ -8,51 +8,47 @@
 var password = "Bez pracy nie ma kolaczy";
 
 var hiddenpass = "";
-
+var tries = 1;
 var letters = new Array(35);
 
-letters[0] = "A";
-letters[1] = "Ą";
-letters[2] = "B";
-letters[3] = "C";
-letters[4] = "Ć";
-letters[5] = "D";
-letters[6] = "E";
-letters[7] = "Ę";
-letters[8] = "F";
-letters[9] = "G";
-letters[10] = "H";
-letters[11] = "I";
-letters[12] = "J";
-letters[13] = "K";
-letters[14] = "L";
-letters[15] = "Ł";
-letters[16] = "M";
-letters[17] = "N";
-letters[18] = "Ń";
-letters[19] = "O";
-letters[20] = "Ó";
-letters[21] = "P";
-letters[22] = "Q";
-letters[23] = "R";
-letters[24] = "S";
-letters[25] = "Ś";
-letters[26] = "T";
-letters[27] = "U";
-letters[28] = "V";
-letters[29] = "W";
-letters[30] = "X";
-letters[31] = "Y";
-letters[32] = "Z";
-letters[33] = "Ż";
-letters[34] = "Ź";
-
-var tries = 1;
-
-for(var i=0; i<password.length; i++) {
-    if(password.charAt(i) == " ") hiddenpass = hiddenpass + " ";
-    else hiddenpass = hiddenpass + "-";
+{
+    letters[0] = "A";
+    letters[1] = "Ą";
+    letters[2] = "B";
+    letters[3] = "C";
+    letters[4] = "Ć";
+    letters[5] = "D";
+    letters[6] = "E";
+    letters[7] = "Ę";
+    letters[8] = "F";
+    letters[9] = "G";
+    letters[10] = "H";
+    letters[11] = "I";
+    letters[12] = "J";
+    letters[13] = "K";
+    letters[14] = "L";
+    letters[15] = "Ł";
+    letters[16] = "M";
+    letters[17] = "N";
+    letters[18] = "Ń";
+    letters[19] = "O";
+    letters[20] = "Ó";
+    letters[21] = "P";
+    letters[22] = "Q";
+    letters[23] = "R";
+    letters[24] = "S";
+    letters[25] = "Ś";
+    letters[26] = "T";
+    letters[27] = "U";
+    letters[28] = "V";
+    letters[29] = "W";
+    letters[30] = "X";
+    letters[31] = "Y";
+    letters[32] = "Z";
+    letters[33] = "Ż";
+    letters[34] = "Ź";
 }
+
 
 function drawPassword() {
     $.ajax({
@@ -64,20 +60,31 @@ function drawPassword() {
             console.log(result['info']);
             console.log(result);
         },
-        complete: function () {
-
-        },
         error: function () {
-            console.log("Cos poszlo nie tak :(");
+            console.log("Cos poszlo nie tak :( draw");
         }
     });
 }
 
 function showPassword() {
-    document.getElementById("gameboard").innerHTML = hiddenpass.toUpperCase();
+    $.ajax({
+        type: "POST",
+        url: "readpassword.php",
+        dataType: 'json',
+        data: { },
+        success: function (json) {
+            console.log(json['info']);
+            console.log(json);
+            document.getElementById("gameboard").innerHTML = json['password'].toUpperCase();
+        },
+        error: function () {
+            console.log("Cos poszlo nie tak :( show");
+        }
+    });
 }
 
 function start() {
+    drawPassword();
     var alphabet_content = "";
     for(var i=0; i<35; i++) {
         var element = "lettt" + i;
@@ -125,6 +132,5 @@ document.addEventListener("DOMContentLoaded", function () {
     tries = 1;
     start();
     showPassword();
-    drawPassword();
 });
 
