@@ -11,7 +11,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
     <link type="text/css" href="style.css" rel="stylesheet" />
-    <script type="text/javascript" src="hangme.js"></script>
+    <script type="text/javascript" src="hangman.js"></script>
 </head>
 <body>
     <div id="container">
