@@ -5,9 +5,6 @@
  * Created by Kwolson on 3/13/2017.
  */
 
-var password = "Bez pracy nie ma kolaczy";
-
-var hiddenpass = "";
 var tries = 1;
 var letters = new Array(35);
 
@@ -57,8 +54,10 @@ function drawPassword() {
         dataType: 'json',
         data: { },
         success: function (result) {
-            console.log(result['info']);
+            // console.log(result['info']);
             console.log(result);
+            showPassword();
+            console.log("drawPassword");
         },
         error: function () {
             console.log("Cos poszlo nie tak :( draw");
@@ -73,9 +72,12 @@ function showPassword() {
         dataType: 'json',
         data: { },
         success: function (json) {
-            console.log(json['info']);
+            // console.log(json['info']);
             console.log(json);
             document.getElementById("gameboard").innerHTML = json['password'].toUpperCase();
+            console.log("showPassword");
+        },
+        complete: function () {
         },
         error: function () {
             console.log("Cos poszlo nie tak :( show");
@@ -87,7 +89,7 @@ function start() {
     drawPassword();
     var alphabet_content = "";
     for(var i=0; i<35; i++) {
-        var element = "lettt" + i;
+        var element = "lett" + i;
         alphabet_content = alphabet_content + '<div class="letter" onclick="letterExists('+ i +')" id="'+ element +'">'+ letters[i] +'</div>';
         if ( (i+1)%7 == 0 ) alphabet_content = alphabet_content + '<div style="clear: both;"></div>';
     }
@@ -95,42 +97,49 @@ function start() {
 }
 
 
-String.prototype.setSign = function (sign, place) {
-    if( place > this.length - 1) return this.toString();
-    else return this.substr(0, place) + sign + this.substr(place+1);
-}
-
 function letterExists(num) {
     console.log(num);
-    var exists = false;
-    for(var i=0; i<password.length; i++) {
-        if (password.charAt(i).toUpperCase() === letters[num]) {
-            exists = true;
-            hiddenpass = hiddenpass.setSign(letters[num],i);
+    $.ajax({
+        type: "POST",
+        url: "checkletter.php",
+        dataType: 'json',
+        data: { num: num },
+        success: function (json) {
+            console.log(json['info']);
+            console.log(json);
+        },
+        error: function () {
+            console.log("Cos poszlo nie tak :( letterExists");
         }
-    }
-    console.log(password);
-    var element = "lett"+ num;
-
-    document.getElementById(element).setAttribute("onclick", null);
-
-    if( exists == true ) {
-        document.getElementById(element).className = "exists";
-        showPassword();
-    } else {
-        document.getElementById(element).className = "notexists";
-        if( tries < 9 ) {
-            // console.log(document.getElementById("gallows").firstElementChild.getAttribute("src"));
-            document.getElementById("gallows").firstElementChild.setAttribute("src", 'img/s'+ tries +'.jpg');
-            tries = tries + 1;
-        }
-    }
+    });
+    // var exists = false;
+    // for(var i=0; i<password.length; i++) {
+    //     if (password.charAt(i).toUpperCase() === letters[num]) {
+    //         exists = true;
+    //         hiddenpass = hiddenpass.setSign(letters[num],i);
+    //     }
+    // }
+    // console.log(password);
+    // var element = "lett"+ num;
+    //
+    // document.getElementById(element).setAttribute("onclick", null);
+    //
+    // if( exists == true ) {
+    //     document.getElementById(element).className = "exists";
+    //     showPassword();
+    // } else {
+    //     document.getElementById(element).className = "notexists";
+    //     if( tries < 9 ) {
+    //         // console.log(document.getElementById("gallows").firstElementChild.getAttribute("src"));
+    //         document.getElementById("gallows").firstElementChild.setAttribute("src", 'img/s'+ tries +'.jpg');
+    //         tries = tries + 1;
+    //     }
+    // }
 
 }
 
 document.addEventListener("DOMContentLoaded", function () {
     tries = 1;
     start();
-    showPassword();
 });
 

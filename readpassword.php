@@ -26,5 +26,5 @@
     }
 
     echo json_encode(array("password" => $row['actual_password'],
-                           "info"     => $info)                 );
+                           "info"     => $info));
 ?>
