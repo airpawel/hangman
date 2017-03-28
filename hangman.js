@@ -53,11 +53,11 @@ function drawPassword() {
         url: "drawpassword.php",
         dataType: 'json',
         data: { },
-        success: function (result) {
+        success: function (json) {
             // console.log(result['info']);
-            console.log(result);
+            // console.log(json);
             showPassword();
-            console.log("drawPassword");
+            // console.log("drawPassword");
         },
         error: function () {
             console.log("Cos poszlo nie tak :( draw");
@@ -73,9 +73,9 @@ function showPassword() {
         data: { },
         success: function (json) {
             // console.log(json['info']);
-            console.log(json);
+            // console.log(json);
             document.getElementById("gameboard").innerHTML = json['password'].toUpperCase();
-            console.log("showPassword");
+            // console.log("showPassword");
         },
         complete: function () {
         },
@@ -98,44 +98,35 @@ function start() {
 
 
 function letterExists(num) {
-    console.log(num);
     $.ajax({
         type: "POST",
         url: "checkletter.php",
         dataType: 'json',
         data: { num: num },
         success: function (json) {
-            console.log(json['info']);
-            console.log(json);
+            // console.log(json['info']);
+            // console.log(json);
+            var exists = (json['exists'] == 1)? true : false;
+
+            var element = "lett"+ num;
+            document.getElementById(element).setAttribute("onclick", null);
+
+            if( exists == true ) {
+                document.getElementById(element).className = "exists";
+                showPassword();
+            } else {
+                document.getElementById(element).className = "notexists";
+                if( tries < 9 ) {
+                    // console.log(document.getElementById("gallows").firstElementChild.getAttribute("src"));
+                    document.getElementById("gallows").firstElementChild.setAttribute("src", 'img/s'+ tries +'.jpg');
+                    tries = tries + 1;
+                }
+            }
         },
         error: function () {
             console.log("Cos poszlo nie tak :( letterExists");
         }
     });
-    // var exists = false;
-    // for(var i=0; i<password.length; i++) {
-    //     if (password.charAt(i).toUpperCase() === letters[num]) {
-    //         exists = true;
-    //         hiddenpass = hiddenpass.setSign(letters[num],i);
-    //     }
-    // }
-    // console.log(password);
-    // var element = "lett"+ num;
-    //
-    // document.getElementById(element).setAttribute("onclick", null);
-    //
-    // if( exists == true ) {
-    //     document.getElementById(element).className = "exists";
-    //     showPassword();
-    // } else {
-    //     document.getElementById(element).className = "notexists";
-    //     if( tries < 9 ) {
-    //         // console.log(document.getElementById("gallows").firstElementChild.getAttribute("src"));
-    //         document.getElementById("gallows").firstElementChild.setAttribute("src", 'img/s'+ tries +'.jpg');
-    //         tries = tries + 1;
-    //     }
-    // }
-
 }
 
 document.addEventListener("DOMContentLoaded", function () {
