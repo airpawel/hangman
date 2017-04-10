@@ -1,11 +1,12 @@
 <?php
-    require_once "dbconnect.php";
+//    include_once(realpath(dirname(__FILE__) . "dbconnect.php"));
+    include($_SERVER['DOCUMENT_ROOT'] . '/dbconnect_local.php');
 
     $link = @mysqli_connect($host, $user, $dbpassword, $database);
     $info = "";
 
     if(!$link) {
-        $info = "Debugging errno: " . mysqli_connect_errno();
+        $info = "(show) Debugging errno: " . mysqli_connect_errno();
     } else {
         $info = "Connection success!";
 //        encoding for strings coming from client (SET NAMES)

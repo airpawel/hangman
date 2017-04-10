@@ -36,7 +36,9 @@
     $letters[33] = "Ż";
     $letters[34] = "Ź";
 
-    require_once "dbconnect.php";
+//    include_once(realpath(dirname(__FILE__) . "dbconnect.php"));
+    include($_SERVER['DOCUMENT_ROOT'] . '/dbconnect_local.php');
+
     $num = $_POST['num'];
 
     $link = @mysqli_connect($host, $user, $dbpassword, $database);
@@ -93,7 +95,7 @@
                              mysqli_real_escape_string($link, $newhidden) );
 
             if(@mysqli_query($link, $query)) {
-                $info = $info ."\nSuccessfully updated";
+                $info = $info ."\nSuccessfully updated" . $newhidden;
             } else {
                 $info = $info ."\nFailed to update. ERROR: ". mysqli_connect_errno() ."\n". mysqli_connect_error();
             }

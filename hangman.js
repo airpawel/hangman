@@ -50,7 +50,7 @@ var letters = new Array(35);
 function drawPassword() {
     $.ajax({
         type: "POST",
-        url: "drawpassword.php",
+        url: "/drawpassword.php",
         dataType: 'json',
         data: { },
         success: function (json) {
@@ -59,16 +59,18 @@ function drawPassword() {
             showPassword();
             // console.log("drawPassword");
         },
-        error: function () {
+        error: function (error) {
+            // console.log(error);
             console.log("Cos poszlo nie tak :( draw");
         }
     });
 }
 
 function showPassword() {
+    // console.log("show");
     $.ajax({
-        type: "POST",
-        url: "readpassword.php",
+        type: "GET",
+        url: "/readpassword.php",
         dataType: 'json',
         data: { },
         success: function (json) {
@@ -98,9 +100,10 @@ function start() {
 
 
 function letterExists(num) {
+    // console.log("check");
     $.ajax({
         type: "POST",
-        url: "checkletter.php",
+        url: "/checkletter.php",
         dataType: 'json',
         data: { num: num },
         success: function (json) {
